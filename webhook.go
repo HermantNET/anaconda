@@ -11,7 +11,7 @@ import (
 func (a TwitterApi) GetActivityWebhooks(v url.Values) (u []WebHookResp, err error) {
 	v = cleanValues(v)
 	responseCh := make(chan response)
-	a.queryQueue <- query{a.baseUrl + "/account_activity/webhooks.json", v, &u, _GET, responseCh}
+	a.queryQueue <- query{a.baseUrl + "/account_activity/all/:env_name/webhooks.json", v, &u, _GET, responseCh}
 	return u, (<-responseCh).err
 }
 
@@ -32,7 +32,7 @@ type WebHookResp struct {
 func (a TwitterApi) SetActivityWebhooks(v url.Values) (u WebHookResp, err error) {
 	v = cleanValues(v)
 	responseCh := make(chan response)
-	a.queryQueue <- query{a.baseUrl + "/account_activity/webhooks.json", v, &u, _POST, responseCh}
+	a.queryQueue <- query{a.baseUrl + "/account_activity/all/:env_name/webhooks.json", v, &u, _POST, responseCh}
 	return u, (<-responseCh).err
 }
 
@@ -41,7 +41,7 @@ func (a TwitterApi) SetActivityWebhooks(v url.Values) (u WebHookResp, err error)
 func (a TwitterApi) DeleteActivityWebhooks(v url.Values, webhookID string) (u interface{}, err error) {
 	v = cleanValues(v)
 	responseCh := make(chan response)
-	a.queryQueue <- query{a.baseUrl + "/account_activity/webhooks/" + webhookID + ".json", v, &u, _DELETE, responseCh}
+	a.queryQueue <- query{a.baseUrl + "/account_activity/all/:env_name/webhooks/" + webhookID + ".json", v, &u, _DELETE, responseCh}
 	return u, (<-responseCh).err
 }
 
@@ -50,7 +50,7 @@ func (a TwitterApi) DeleteActivityWebhooks(v url.Values, webhookID string) (u in
 func (a TwitterApi) PutActivityWebhooks(v url.Values, webhookID string) (u interface{}, err error) {
 	v = cleanValues(v)
 	responseCh := make(chan response)
-	a.queryQueue <- query{a.baseUrl + "/account_activity/webhooks/" + webhookID + ".json", v, &u, _PUT, responseCh}
+	a.queryQueue <- query{a.baseUrl + "/account_activity/all/:env_name/webhooks/" + webhookID + ".json", v, &u, _PUT, responseCh}
 	return u, (<-responseCh).err
 }
 
@@ -60,7 +60,7 @@ func (a TwitterApi) PutActivityWebhooks(v url.Values, webhookID string) (u inter
 func (a TwitterApi) SetWHSubscription(v url.Values, webhookID string) (u interface{}, err error) {
 	v = cleanValues(v)
 	responseCh := make(chan response)
-	a.queryQueue <- query{a.baseUrl + "/account_activity/webhooks/" + webhookID + "/subscriptions.json", v, &u, _POST, responseCh}
+	a.queryQueue <- query{a.baseUrl + "account_activity/all/:env_name/subscriptions.json", v, &u, _POST, responseCh}
 	return u, (<-responseCh).err
 }
 
@@ -70,7 +70,7 @@ func (a TwitterApi) SetWHSubscription(v url.Values, webhookID string) (u interfa
 func (a TwitterApi) GetWHSubscription(v url.Values, webhookID string) (u interface{}, err error) {
 	v = cleanValues(v)
 	responseCh := make(chan response)
-	a.queryQueue <- query{a.baseUrl + "/account_activity/webhooks/" + webhookID + "/subscriptions.json", v, &u, _GET, responseCh}
+	a.queryQueue <- query{a.baseUrl + "account_activity/all/:ENV_NAME/subscriptions.json", v, &u, _GET, responseCh}
 	return u, (<-responseCh).err
 }
 
@@ -80,6 +80,6 @@ func (a TwitterApi) GetWHSubscription(v url.Values, webhookID string) (u interfa
 func (a TwitterApi) DeleteWHSubscription(v url.Values, webhookID string) (u interface{}, err error) {
 	v = cleanValues(v)
 	responseCh := make(chan response)
-	a.queryQueue <- query{a.baseUrl + "/account_activity/webhooks/" + webhookID + "/subscriptions.json", v, &u, _DELETE, responseCh}
+	a.queryQueue <- query{a.baseUrl + "account_activity/all/:ENV_NAME/subscriptions.json", v, &u, _DELETE, responseCh}
 	return u, (<-responseCh).err
 }
